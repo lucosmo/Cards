@@ -29,16 +29,15 @@ namespace MyCards.API.Test.Controllers
         public async Task Get_EmptyCardList_Pass()
         {
             //Arrange
-
+            _cardRepositoryMock.Setup(x => x.Get()).ReturnsAsync(new List<Card>());
             //Act
             var result = await _controller.Get();
             var okResult = result as ObjectResult;
-            //var okResult = Assert.IsType<OkObjectResult>(result);
-            
+            var list = okResult?.Value as List<Card>;            
             //Assert
             Assert.IsNotNull(okResult);
             Assert.That(okResult.StatusCode, Is.EqualTo(200));
-            
+            Assert.That(list, Is.Empty);            
         }
 
         [Test]
@@ -46,7 +45,8 @@ namespace MyCards.API.Test.Controllers
         {
             //Arrange
             Card c = new Card(1, "Card1", "cardfile1", DateTime.Now);
-           
+            _cardRepositoryMock.Setup(x => x.Create(It.IsAny<Card>()))
+                .ReturnsAsync(c);           
             //Act
             var result = await _controller.Post(c);
             var okResult = result as ObjectResult;
@@ -55,9 +55,9 @@ namespace MyCards.API.Test.Controllers
             //Assert
             Assert.IsNotNull(okResult);
             Assert.That(okResult.StatusCode, Is.EqualTo(200));
-           // Assert.That(cvalues, Has.Property("Title").EqualTo(c.Title)
-             //             & Has.Property("FileReference").EqualTo(c.FileReference)
-               //           & Has.Property("CreatedAt").EqualTo(c.CreatedAt));
+            Assert.That(cvalues, Has.Property("Title").EqualTo(c.Title)
+                          & Has.Property("FileReference").EqualTo(c.FileReference)
+                          & Has.Property("CreatedAt").EqualTo(c.CreatedAt));
                
         }
     }

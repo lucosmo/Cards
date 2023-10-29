@@ -36,9 +36,10 @@ namespace MyCards.API.Test.Repositories
             //Act
             Card newCard =await _repository.Create(c);
             //Assert
-            Assert.That(newCard, Has.Property("Title").EqualTo(c.Title)
+            Assert.That(newCard, Has.Property("Id").EqualTo(1) & Has.Property("Title").EqualTo(c.Title)
                           & Has.Property("FileReference").EqualTo(c.FileReference)
                           & Has.Property("CreatedAt").EqualTo(c.CreatedAt));
+            
 
         }
 

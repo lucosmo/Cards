@@ -7,21 +7,21 @@ namespace MyCards.API.Repositories
     {
         private List<Card> cards = new List<Card>();
         private int nextId = 1;
-        public async Task<Card> Create(Card card)
+        public Task<Card> Create(Card card)
         {
             card.Id = nextId++;
-            await Task.Run(() => cards.Add(card)); 
-            return card;
+            cards.Add(card); 
+            return Task.FromResult(card);
         }
         
-        public async Task<List<Card>> Get()
+        public Task<List<Card>> Get()
         {
-            return await Task.Run(()=> cards);
+            return Task.FromResult(cards);
         }
 
-        public async Task<Card?> GetById(int id)
+        public Task<Card?> GetById(int id)
         {
-            return await Task.Run(() => cards.FirstOrDefault(i => i.Id == id));
+            return Task.FromResult(cards.FirstOrDefault(i => i.Id == id));
         }
     }
 }

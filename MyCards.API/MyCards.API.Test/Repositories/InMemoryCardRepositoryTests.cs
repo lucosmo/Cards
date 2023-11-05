@@ -67,5 +67,55 @@ namespace MyCards.API.Test.Repositories
             //Assert
             Assert.That((await _repository.Get()).Count, Is.EqualTo(2));
         }
+
+        [Test]
+        public async Task UpdateTitle_CardListEmpty_Pass()
+        {
+            //Arrange
+            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
+            //Act
+            Card? updatedCard = await _repository.Update(1, c1);
+            //Assert
+            Assert.IsNull(updatedCard);
+        }
+
+        [Test]
+        public async Task UpdateTitle_CardInTheList_Pass()
+        {
+            //Arrange
+            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
+            Card c2 = new Card(null, "Card2", "cardfile2", DateTime.Now);
+            Card c3 = new Card(null, "Card3", "cardfile3", DateTime.Now);
+            Card newValuesCard = new Card(null, "NewCard3", "cardfile3", DateTime.Now);
+
+            Card newCard = await _repository.Create(c1);
+            Card newCard2 = await _repository.Create(c2);
+            Card newCard3 = await _repository.Create(c3);
+            //Act
+            Card? updatedCard = await _repository.Update(3, newValuesCard);
+            //Assert
+            Assert.IsNotNull(updatedCard);
+            Assert.That(updatedCard, Has.Property("Id").EqualTo(3) & Has.Property("Title").EqualTo(newValuesCard.Title));
+        }
+
+        [Test]
+        public async Task UpdateTitle_CardNotInTheList_Pass()
+        {
+            //Arrange
+            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
+            Card c2 = new Card(null, "Card2", "cardfile2", DateTime.Now);
+            Card c3 = new Card(null, "Card3", "cardfile3", DateTime.Now);
+            Card newValuesCard = new Card(null, "NewCard5", "cardfile5", DateTime.Now);
+
+            Card newCard = await _repository.Create(c1);
+            Card newCard2 = await _repository.Create(c2);
+            Card newCard3 = await _repository.Create(c3);
+            //Act
+            Card? updatedCard = await _repository.Update(5, newValuesCard);
+            //Assert
+            Assert.IsNull(updatedCard);
+            
+        }
+
     }
 }

@@ -60,5 +60,79 @@ namespace MyCards.API.Test.Controllers
                           & Has.Property("CreatedAt").EqualTo(c.CreatedAt));
                
         }
+        [Test]
+        public async Task Put_CardIsInTheList_Pass()
+        {
+            //Arrange
+            Card c = new Card(3, "Card3", "cardfile3", DateTime.Now);
+            Card newValuesCard = new Card(3, "NewCard3", "cardfile3", DateTime.Now);
+            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Card>()))
+                .ReturnsAsync(c);
+            //Act
+            var result = await _controller.Put(3, newValuesCard);
+            var okRersult = result as ObjectResult;
+
+
+            //Assert
+            Assert.IsNotNull(okRersult);
+            Assert.That(okRersult.StatusCode, Is.EqualTo(200));
+
+        }
+        [Test]
+        public async Task Put_CardIsNotInTheList_Pass()
+        {
+            //Arrange
+            
+            Card newValuesCard = new Card(null, "NewCard3", "cardfile3", DateTime.Now);
+            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Card>()))
+                .ReturnsAsync((Card?)null);
+            //Act
+            var result = await _controller.Put(1,newValuesCard);
+            var notFoundResult = result as StatusCodeResult;
+            
+
+            //Assert
+            Assert.IsNotNull(notFoundResult);
+            Assert.That(notFoundResult?.StatusCode, Is.EqualTo(404));
+           
+        }
+
+        [Test]
+        public async Task Delete_CardIsNotInTheList_Pass()
+        {
+            //Arrange
+
+            _cardRepositoryMock.Setup(x => x.Remove(It.IsAny<int>()))
+              //  .ReturnsAsync((Card?)null);
+              .Returns(Task.FromResult<Card?>(null));
+            //Act
+            var result = await _controller.Delete(1);
+            var notFoundResult = result as NotFoundResult;
+
+
+            //Assert
+            Assert.IsNotNull(notFoundResult);
+            Assert.That(notFoundResult.StatusCode, Is.EqualTo(404));
+
+        }
+        [Test]
+        public async Task Delete_CardIsInTheList_Pass()
+        {
+            //Arrange
+            Card c = new Card(1, "Card1", "cardfile1", DateTime.Now);
+            _cardRepositoryMock.Setup(x => x.Remove(It.IsAny<int>()))
+                .ReturnsAsync(c);
+            //Act
+            var result = await _controller.Delete(1);
+            var okResult = result as ObjectResult;
+
+
+            //Assert
+            Assert.IsNotNull(okResult);
+            Assert.That(okResult.StatusCode, Is.EqualTo(200));
+
+        }
+
+
     }
 }

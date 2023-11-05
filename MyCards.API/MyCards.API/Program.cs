@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MyCards.API.Data;
 using MyCards.API.Repositories;
 
 namespace MyCards.API
@@ -15,6 +17,11 @@ namespace MyCards.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<ICardRepository, InMemoryCardRepository>();
+            var connectionString = builder.Configuration["ConnectionStrings:MyCardsDb"];
+            builder.Services.AddDbContext<MyCardsDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,3 +42,8 @@ namespace MyCards.API
         }
     }
 }
+
+/*
+ * dotnet ef migrations add Initial
+ * dotnet ef database update
+ * */

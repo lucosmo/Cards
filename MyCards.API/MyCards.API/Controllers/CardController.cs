@@ -36,33 +36,27 @@ namespace MyCards.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Card newCard)
         {
-            
+            newCard.CreatedAt = DateTime.Now; 
             var createdCard = await _cardRepository.Create(newCard);
 
             return Ok(createdCard);
         }
 
-       /* [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Card updatedCard)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] Card newValuesCard)
         {
-            var existingCard = cards.FirstOrDefault(i => i.id == id);
-            if (existingCard == null)
-                return NotFound();
-
-            existingCard.title = updatedCard.title;
-            return NoContent();
+            var updatedCard = await _cardRepository.Update(id, newValuesCard);
+            return (updatedCard is null)? NotFound() : Ok(updatedCard);
+            
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+       [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var existingCard= cards.FirstOrDefault(i => i.id == id);
-            if (existingCard == null)
-                return NotFound();
-
-            cards.Remove(existingCard);
-            return NoContent();
-        }*/
+            var removedCard = await _cardRepository.Remove(id); 
+            return removedCard is null ? NotFound() : Ok(removedCard);
+           
+        }
     }
 }
 

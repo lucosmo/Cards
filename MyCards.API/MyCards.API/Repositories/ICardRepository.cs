@@ -1,4 +1,5 @@
-﻿using MyCards.API.Model;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyCards.API.Model;
 
 namespace MyCards.API.Repositories
 {
@@ -8,5 +9,8 @@ namespace MyCards.API.Repositories
         Task<Card?> GetById(int id);
         Task<Card> Create(Card card);
 
+        Task<Card?> Update(int id, Card newValuesCard);
+
+        Task<Card?> Remove(int id);
     }
 }

@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyCards.API.Data.Dtos;
+using MyCards.API.Data.Entities;
 using MyCards.API.Model;
 
 namespace MyCards.API.Repositories
 {
     public interface ICardRepository
     {
-        Task<List<Card>> Get();
-        Task<Card?> GetById(int id);
-        Task<Card> Create(Card card);
+        Task<List<CardEntity>> Get();
+        Task<CardEntity?> GetById(int id);
+        Task<CardDto> Create(CardEntity card);
 
-        Task<Card?> Update(int id, Card newValuesCard);
+        Task<CardEntity?> Update(int id, CardEntity newValuesCard);
 
-        Task<Card?> Remove(int id);
+        Task<CardEntity?> Remove(int id);
     }
 }

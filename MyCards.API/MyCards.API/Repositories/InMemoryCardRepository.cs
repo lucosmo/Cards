@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyCards.API.Data.Dtos;
+using MyCards.API.Data.Entities;
 using MyCards.API.Model;
 using System.Collections.Immutable;
 
@@ -6,51 +8,54 @@ namespace MyCards.API.Repositories
 {
     public class InMemoryCardRepository : ICardRepository
     {
-        private List<Card> cards = new List<Card>();
+        private List<CardEntity> cards = new List<CardEntity>();
         private int nextId = 1;
-        public Task<Card> Create(Card card)
+        public Task<CardDto> Create(CardEntity card)
         {
             card.Id = nextId++;
-            cards.Add(card); 
-            return Task.FromResult(card);
+            cards.Add(card);
+            CardDto resultCard = new CardDto(card.Id, card.Title, card.FileReference, card.CreatedAt);
+            return Task.FromResult(resultCard);
         }
         
-        public Task<List<Card>> Get()
+        public Task<List<CardEntity>> Get()
         {
             return Task.FromResult(cards);
         }
 
-        public Task<Card?> GetById(int id)
+        public Task<CardEntity?> GetById(int id)
         {
             return Task.FromResult(cards.FirstOrDefault(i => i.Id == id));
         }
 
-        public Task<Card?> Update(int id, Card newValuesCard)
+        public Task<CardEntity?> Update(int id, CardEntity newValuesCard)
         {
             var existingCard = cards.FirstOrDefault(i => i.Id == id);
             if (existingCard != null) 
             {
                 existingCard.Title = newValuesCard.Title;
-                return Task.FromResult<Card?>(existingCard);
+                var resultCardEntity = new CardEntity(existingCard.Id, existingCard.Title, existingCard.FileReference, existingCard.CreatedAt);
+                return Task.FromResult<CardEntity?>(resultCardEntity);
             }
             else
             {
-                return Task.FromResult<Card?>(null);
+                return Task.FromResult<CardEntity?>(null);
             }
             
         }
 
-        public Task<Card?> Remove(int id) 
+        public Task<CardEntity?> Remove(int id) 
         {
             var existingCard = cards.FirstOrDefault(i => i.Id == id);
             if (existingCard != null)
             {
                 var isRemoved = cards.Remove(existingCard);
-                return isRemoved ? Task.FromResult<Card?>(existingCard) : Task.FromResult<Card?>(null);
+                //var removedCardDto = new CardDto(existingCard.Id, existingCard.Title, existingCard.FileReference, existingCard.CreatedAt);
+                return isRemoved ? Task.FromResult<CardEntity?>(existingCard) : Task.FromResult<CardEntity?>(null);
             }
             else
             {
-                return Task.FromResult<Card?>(null);
+                return Task.FromResult<CardEntity?>(null);
             }
         }
     }

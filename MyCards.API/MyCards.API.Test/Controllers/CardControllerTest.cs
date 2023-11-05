@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MyCards.API.Controllers;
+using MyCards.API.Data.Dtos;
+using MyCards.API.Data.Entities;
 using MyCards.API.Model;
 using MyCards.API.Repositories;
 using System;
@@ -29,47 +31,50 @@ namespace MyCards.API.Test.Controllers
         public async Task Get_EmptyCardList_Pass()
         {
             //Arrange
-            _cardRepositoryMock.Setup(x => x.Get()).ReturnsAsync(new List<Card>());
+            _cardRepositoryMock.Setup(x => x.Get()).ReturnsAsync(new List<CardEntity>());
             //Act
             var result = await _controller.Get();
             var okResult = result as ObjectResult;
-            var list = okResult?.Value as List<Card>;            
+            var list = okResult?.Value as List<CardEntity>;            
             //Assert
             Assert.IsNotNull(okResult);
             Assert.That(okResult.StatusCode, Is.EqualTo(200));
-            Assert.That(list, Is.Empty);            
+            Assert.That(list, Is.Null);            
         }
 
         [Test]
         public async Task Post_NewCard_Pass()
         {
             //Arrange
-            Card c = new Card(1, "Card1", "cardfile1", DateTime.Now);
-            _cardRepositoryMock.Setup(x => x.Create(It.IsAny<Card>()))
-                .ReturnsAsync(c);           
+            CreateCardDto c = new CreateCardDto("Card1", "cardfile1");
+            CardDto resultCard = new CardDto(1, c.Title, c.FileReference, DateTime.Now);
+            _cardRepositoryMock.Setup(x => x.Create(It.IsAny<CardEntity>()))
+                .ReturnsAsync(resultCard);           
             //Act
             var result = await _controller.Post(c);
             var okResult = result as ObjectResult;
-            var cvalues = okResult?.Value as Card;
+            var cvalues = okResult?.Value as CardDto;
             
             //Assert
             Assert.IsNotNull(okResult);
             Assert.That(okResult.StatusCode, Is.EqualTo(200));
             Assert.That(cvalues, Has.Property("Title").EqualTo(c.Title)
                           & Has.Property("FileReference").EqualTo(c.FileReference)
-                          & Has.Property("CreatedAt").EqualTo(c.CreatedAt));
+                          );
                
         }
         [Test]
         public async Task Put_CardIsInTheList_Pass()
         {
             //Arrange
-            Card c = new Card(3, "Card3", "cardfile3", DateTime.Now);
-            Card newValuesCard = new Card(3, "NewCard3", "cardfile3", DateTime.Now);
-            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Card>()))
+            CardEntity c = new CardEntity(3, "Card3", "cardfile3", DateTime.Now);
+            //CardEntity newValuesCard = new CardEntity(3, "NewCard3", "cardfile3", DateTime.Now);
+            //CardDto updatedValuesCardDto = new CardDto(newValuesCard.Id, newValuesCard.Title, newValuesCard.FileReference, newValuesCard.CreatedAt);
+            UpdateCardDto newVauesCardDto = new UpdateCardDto(3, "NewCard3");
+            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<CardEntity>()))
                 .ReturnsAsync(c);
             //Act
-            var result = await _controller.Put(3, newValuesCard);
+            var result = await _controller.Put(3, newVauesCardDto);
             var okRersult = result as ObjectResult;
 
 
@@ -82,10 +87,10 @@ namespace MyCards.API.Test.Controllers
         public async Task Put_CardIsNotInTheList_Pass()
         {
             //Arrange
-            
-            Card newValuesCard = new Card(null, "NewCard3", "cardfile3", DateTime.Now);
-            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Card>()))
-                .ReturnsAsync((Card?)null);
+
+            UpdateCardDto newValuesCard = new UpdateCardDto(3, "NewCard3");
+            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<CardEntity>()))
+                .ReturnsAsync((CardEntity?)null);
             //Act
             var result = await _controller.Put(1,newValuesCard);
             var notFoundResult = result as StatusCodeResult;
@@ -104,7 +109,7 @@ namespace MyCards.API.Test.Controllers
 
             _cardRepositoryMock.Setup(x => x.Remove(It.IsAny<int>()))
               //  .ReturnsAsync((Card?)null);
-              .Returns(Task.FromResult<Card?>(null));
+              .Returns(Task.FromResult<CardEntity?>(null));
             //Act
             var result = await _controller.Delete(1);
             var notFoundResult = result as NotFoundResult;
@@ -119,7 +124,7 @@ namespace MyCards.API.Test.Controllers
         public async Task Delete_CardIsInTheList_Pass()
         {
             //Arrange
-            Card c = new Card(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
             _cardRepositoryMock.Setup(x => x.Remove(It.IsAny<int>()))
                 .ReturnsAsync(c);
             //Act

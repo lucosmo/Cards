@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyCards.API.Data.Dtos;
 using MyCards.API.Data.Entities;
-using MyCards.API.Model;
 using MyCards.API.Repositories;
-using System.Reflection.Metadata.Ecma335;
 
 namespace MyCards.API.Controllers
 {
@@ -22,7 +19,7 @@ namespace MyCards.API.Controllers
         public async Task<IActionResult> Get()
         {
             var cards = await _cardRepository.Get();
-            var cardsDto = cards.Select(card => new CardDto(card.Id, card.Title, card.FileReference, card.CreatedAt));
+            var cardsDto = cards.Select(card => card.CreateCardDto());
             return Ok(cardsDto);
         }
 
@@ -37,7 +34,7 @@ namespace MyCards.API.Controllers
             }
             else
             {
-                var cardDto = new CardDto(card.Id, card.Title, card.FileReference, card.CreatedAt);
+                var cardDto = card.CreateCardDto();
                 return Ok(cardDto);
             }
 
@@ -46,8 +43,6 @@ namespace MyCards.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCardDto newCard)
         {
-
-            //newCard.CreatedAt = DateTime.Now; 
             var newCardEntity = new CardEntity
             {
                 Title = newCard.Title,
@@ -55,35 +50,24 @@ namespace MyCards.API.Controllers
                 CreatedAt = DateTime.Now
             };
             var createdCard = await _cardRepository.Create(newCardEntity);
-            //CreateCardDto createdCardDto = new CreateCardDto(createdCard.Title, createdCard.FileReference);
-            if (createdCard != null)
-            {
-                return Ok(createdCard);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            var createdCardDto = createdCard.CreateCardDto();
+            return Ok(createdCardDto);
+            
             
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateCardDto newValuesCard)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UpdateCardDto newValuesCard)
         {
             var newValuesEntity = new CardEntity
-            {
-                Id = id,
+            { 
+                Id = newValuesCard.Id,
                 Title = newValuesCard.Title
              };
-            var updatedCard = await _cardRepository.Update(id, newValuesEntity);
+            var updatedCard = await _cardRepository.Update(newValuesEntity);
             if(updatedCard != null)
             {
-                var updatedCardDto = new CardDto(
-                    updatedCard.Id,
-                    updatedCard.Title,
-                    updatedCard.FileReference,
-                    updatedCard.CreatedAt
-                    );
+                var updatedCardDto = updatedCard.CreateCardDto();
                 return Ok(updatedCardDto);
             }
             else
@@ -100,12 +84,7 @@ namespace MyCards.API.Controllers
             var removedCard = await _cardRepository.Remove(id);
             if (removedCard != null) 
             {
-                var removedCardDto = new CardDto(
-                    removedCard.Id,
-                    removedCard.Title,
-                    removedCard.FileReference,
-                    removedCard.CreatedAt
-                    );
+                var removedCardDto = removedCard.CreateCardDto();
                 return Ok(removedCardDto);
             }
             else

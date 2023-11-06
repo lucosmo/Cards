@@ -1,4 +1,6 @@
-﻿namespace MyCards.API.Data.Entities
+﻿using MyCards.API.Data.Dtos;
+
+namespace MyCards.API.Data.Entities
 {
     public class CardEntity
     {
@@ -14,10 +16,15 @@
         }
         public CardEntity(int id, string title, string fileReference, DateTime createdAt)
         {
-            this.Id = id;
-            this.Title = title;
-            this.FileReference = fileReference;
-            this.CreatedAt = createdAt;
+            Id = id;
+            Title = title;
+            FileReference = fileReference;
+            CreatedAt = createdAt;
+        }
+
+        public CardDto CreateCardDto()
+        {
+            return new CardDto(Id, Title, FileReference, CreatedAt);
         }
     }
 }

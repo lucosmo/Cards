@@ -16,7 +16,8 @@ namespace MyCards.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<ICardRepository, InMemoryCardRepository>();
+            //builder.Services.AddSingleton<ICardRepository, InMemoryCardRepository>();
+            builder.Services.AddScoped<ICardRepository, CardRepository>();
             var connectionString = builder.Configuration["ConnectionStrings:MyCardsDb"];
             builder.Services.AddDbContext<MyCardsDbContext>(options =>
             {

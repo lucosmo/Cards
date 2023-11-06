@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyCards.API.Data.Dtos;
-using MyCards.API.Data.Entities;
-using MyCards.API.Model;
+﻿using MyCards.API.Data.Entities;
+
 
 namespace MyCards.API.Repositories
 {
@@ -9,9 +7,9 @@ namespace MyCards.API.Repositories
     {
         Task<List<CardEntity>> Get();
         Task<CardEntity?> GetById(int id);
-        Task<CardDto> Create(CardEntity card);
+        Task<CardEntity> Create(CardEntity card);
 
-        Task<CardEntity?> Update(int id, CardEntity newValuesCard);
+        Task<CardEntity?> Update(CardEntity newValuesCard);
 
         Task<CardEntity?> Remove(int id);
     }

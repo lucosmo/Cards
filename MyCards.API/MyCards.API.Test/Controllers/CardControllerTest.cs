@@ -3,14 +3,7 @@ using Moq;
 using MyCards.API.Controllers;
 using MyCards.API.Data.Dtos;
 using MyCards.API.Data.Entities;
-using MyCards.API.Model;
 using MyCards.API.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyCards.API.Test.Controllers
 {
@@ -47,7 +40,7 @@ namespace MyCards.API.Test.Controllers
         {
             //Arrange
             CreateCardDto c = new CreateCardDto("Card1", "cardfile1");
-            CardDto resultCard = new CardDto(1, c.Title, c.FileReference, DateTime.Now);
+            CardEntity resultCard = new CardEntity(1, c.Title, c.FileReference, DateTime.Now);
             _cardRepositoryMock.Setup(x => x.Create(It.IsAny<CardEntity>()))
                 .ReturnsAsync(resultCard);           
             //Act
@@ -71,10 +64,10 @@ namespace MyCards.API.Test.Controllers
             //CardEntity newValuesCard = new CardEntity(3, "NewCard3", "cardfile3", DateTime.Now);
             //CardDto updatedValuesCardDto = new CardDto(newValuesCard.Id, newValuesCard.Title, newValuesCard.FileReference, newValuesCard.CreatedAt);
             UpdateCardDto newVauesCardDto = new UpdateCardDto(3, "NewCard3");
-            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<CardEntity>()))
+            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<CardEntity>()))
                 .ReturnsAsync(c);
             //Act
-            var result = await _controller.Put(3, newVauesCardDto);
+            var result = await _controller.Put(newVauesCardDto);
             var okRersult = result as ObjectResult;
 
 
@@ -89,10 +82,10 @@ namespace MyCards.API.Test.Controllers
             //Arrange
 
             UpdateCardDto newValuesCard = new UpdateCardDto(3, "NewCard3");
-            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<CardEntity>()))
+            _cardRepositoryMock.Setup(x => x.Update(It.IsAny<CardEntity>()))
                 .ReturnsAsync((CardEntity?)null);
             //Act
-            var result = await _controller.Put(1,newValuesCard);
+            var result = await _controller.Put(newValuesCard);
             var notFoundResult = result as StatusCodeResult;
             
 

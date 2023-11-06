@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyCards.API.Data.Dtos;
-using MyCards.API.Data.Entities;
-using MyCards.API.Model;
-using System.Collections.Immutable;
+﻿using MyCards.API.Data.Entities;
 
 namespace MyCards.API.Repositories
 {
@@ -10,12 +6,11 @@ namespace MyCards.API.Repositories
     {
         private List<CardEntity> cards = new List<CardEntity>();
         private int nextId = 1;
-        public Task<CardDto> Create(CardEntity card)
+        public Task<CardEntity> Create(CardEntity card)
         {
             card.Id = nextId++;
             cards.Add(card);
-            CardDto resultCard = new CardDto(card.Id, card.Title, card.FileReference, card.CreatedAt);
-            return Task.FromResult(resultCard);
+            return Task.FromResult(card);
         }
         
         public Task<List<CardEntity>> Get()
@@ -28,9 +23,9 @@ namespace MyCards.API.Repositories
             return Task.FromResult(cards.FirstOrDefault(i => i.Id == id));
         }
 
-        public Task<CardEntity?> Update(int id, CardEntity newValuesCard)
+        public Task<CardEntity?> Update(CardEntity newValuesCard)
         {
-            var existingCard = cards.FirstOrDefault(i => i.Id == id);
+            var existingCard = cards.FirstOrDefault(i => i.Id == newValuesCard.Id);
             if (existingCard != null) 
             {
                 existingCard.Title = newValuesCard.Title;

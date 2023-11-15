@@ -23,19 +23,36 @@ namespace MyCards.API.Repositories
             return _cardsDbContext.Cards.ToListAsync();
         }
 
-        public Task<CardEntity?> GetById(int id)
+        public async Task<CardEntity?> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _cardsDbContext.Cards.FindAsync(id);
         }
 
-        public Task<CardEntity?> Remove(int id)
+        public async Task<CardEntity?> Remove(int id)
         {
-            throw new NotImplementedException();
+            var cardToRemove = await _cardsDbContext.Cards.FindAsync(id);
+
+            if (cardToRemove != null)
+            {
+                _cardsDbContext.Cards.Remove(cardToRemove);
+                await _cardsDbContext.SaveChangesAsync();
+            }
+
+            return cardToRemove;
         }
 
-        public Task<CardEntity?> Update(CardEntity newValuesCard)
+        public async Task<CardEntity?> Update(CardEntity newValuesCard)
         {
-            throw new NotImplementedException();
+            var cardToUpdate = await _cardsDbContext.Cards.FindAsync(newValuesCard.Id);
+
+            if (cardToUpdate != null)
+            {
+                cardToUpdate.Title = newValuesCard.Title;
+
+                await _cardsDbContext.SaveChangesAsync();
+            }
+
+            return cardToUpdate;
         }
     }
 }

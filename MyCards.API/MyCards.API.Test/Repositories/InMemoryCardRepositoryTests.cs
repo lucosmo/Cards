@@ -1,11 +1,5 @@
-﻿using MyCards.API.Model;
+﻿using MyCards.API.Data.Entities;
 using MyCards.API.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyCards.API.Test.Repositories
 {
@@ -32,9 +26,9 @@ namespace MyCards.API.Test.Repositories
         public async Task Add_Card_Pass()
         {
             //Arrange
-            Card c = new Card(null,"Card1", "cardfile1", DateTime.Now);
+            CardEntity c = new CardEntity(1,"Card1", "cardfile1", DateTime.Now);
             //Act
-            Card newCard =await _repository.Create(c);
+            var newCard =await _repository.Create(c);
             //Assert
             Assert.That(newCard, Has.Property("Id").EqualTo(1) & Has.Property("Title").EqualTo(c.Title)
                           & Has.Property("FileReference").EqualTo(c.FileReference)
@@ -47,10 +41,10 @@ namespace MyCards.API.Test.Repositories
         public async Task Check_CardListNotEmpty_Pass()
         {
             //Arrange
-            Card c = new Card(null, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
             //Act
-            Card newCard = await _repository.Create(c);
-            List<Card> newList = await _repository.Get();
+            var newCard = await _repository.Create(c);
+            List<CardEntity> newList = await _repository.Get();
             //Assert
             Assert.That(newList.Count, Is.EqualTo(1));
         }
@@ -59,11 +53,11 @@ namespace MyCards.API.Test.Repositories
         public async Task AddTwoCards_CardListHasTwoCards_Pass()
         {
             //Arrange
-            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
-            Card c2 = new Card(null, "Card2", "cardfile2", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now);
             //Act
-            Card newCard = await _repository.Create(c1);
-            Card newCard2 = await _repository.Create(c2);
+            var newCard = await _repository.Create(c1);
+            var newCard2 = await _repository.Create(c2);
             //Assert
             Assert.That((await _repository.Get()).Count, Is.EqualTo(2));
         }
@@ -72,9 +66,9 @@ namespace MyCards.API.Test.Repositories
         public async Task UpdateTitle_CardListEmpty_Pass()
         {
             //Arrange
-            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
             //Act
-            Card? updatedCard = await _repository.Update(1, c1);
+            CardEntity? updatedCard = await _repository.Update(c1);
             //Assert
             Assert.IsNull(updatedCard);
         }
@@ -83,16 +77,16 @@ namespace MyCards.API.Test.Repositories
         public async Task UpdateTitle_CardInTheList_Pass()
         {
             //Arrange
-            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
-            Card c2 = new Card(null, "Card2", "cardfile2", DateTime.Now);
-            Card c3 = new Card(null, "Card3", "cardfile3", DateTime.Now);
-            Card newValuesCard = new Card(null, "NewCard3", "cardfile3", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now);
+            CardEntity c3 = new CardEntity(3, "Card3", "cardfile3", DateTime.Now);
+            CardEntity newValuesCard = new CardEntity(3, "NewCard3", "cardfile3", DateTime.Now);
 
-            Card newCard = await _repository.Create(c1);
-            Card newCard2 = await _repository.Create(c2);
-            Card newCard3 = await _repository.Create(c3);
+            var newCard = await _repository.Create(c1);
+            var newCard2 = await _repository.Create(c2);
+            var newCard3 = await _repository.Create(c3);
             //Act
-            Card? updatedCard = await _repository.Update(3, newValuesCard);
+            CardEntity? updatedCard = await _repository.Update(newValuesCard);
             //Assert
             Assert.IsNotNull(updatedCard);
             Assert.That(updatedCard, Has.Property("Id").EqualTo(3) & Has.Property("Title").EqualTo(newValuesCard.Title));
@@ -102,16 +96,16 @@ namespace MyCards.API.Test.Repositories
         public async Task UpdateTitle_CardNotInTheList_Pass()
         {
             //Arrange
-            Card c1 = new Card(null, "Card1", "cardfile1", DateTime.Now);
-            Card c2 = new Card(null, "Card2", "cardfile2", DateTime.Now);
-            Card c3 = new Card(null, "Card3", "cardfile3", DateTime.Now);
-            Card newValuesCard = new Card(null, "NewCard5", "cardfile5", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now);
+            CardEntity c3 = new CardEntity(3, "Card3", "cardfile3", DateTime.Now);
+            CardEntity newValuesCard = new CardEntity(5, "NewCard5", "cardfile5", DateTime.Now);
 
-            Card newCard = await _repository.Create(c1);
-            Card newCard2 = await _repository.Create(c2);
-            Card newCard3 = await _repository.Create(c3);
+            var newCard = await _repository.Create(c1);
+            var newCard2 = await _repository.Create(c2);
+            var newCard3 = await _repository.Create(c3);
             //Act
-            Card? updatedCard = await _repository.Update(5, newValuesCard);
+            CardEntity? updatedCard = await _repository.Update(newValuesCard);
             //Assert
             Assert.IsNull(updatedCard);
             

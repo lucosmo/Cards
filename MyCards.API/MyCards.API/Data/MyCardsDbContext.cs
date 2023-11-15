@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyCards.API.Data.Entities;
-using MyCards.API.Model;
 
 
 namespace MyCards.API.Data

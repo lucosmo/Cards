@@ -18,6 +18,7 @@ namespace MyCards.API
             builder.Services.AddSwaggerGen();
             //builder.Services.AddSingleton<ICardRepository, InMemoryCardRepository>();
             builder.Services.AddScoped<ICardRepository, CardRepository>();
+            builder.Services.AddScoped<IFileRepository, AzureBlobFileRepository>(_ => new AzureBlobFileRepository(builder.Configuration["StorageConnectionString"]));
             var connectionString = builder.Configuration["ConnectionStrings:MyCardsDb"];
             builder.Services.AddDbContext<MyCardsDbContext>(options =>
             {

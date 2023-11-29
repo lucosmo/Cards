@@ -8,23 +8,25 @@ namespace MyCards.API.Data.Entities
         public string Title { get; set; } = string.Empty;
         public string FileReference { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
+        public bool FileLinked { get; set; }
 
 
         public CardEntity()
         {
 
         }
-        public CardEntity(int id, string title, string fileReference, DateTime createdAt)
+        public CardEntity(int id, string title, string fileReference, DateTime createdAt, bool fileLinked)
         {
             Id = id;
             Title = title;
             FileReference = fileReference;
             CreatedAt = createdAt;
+            FileLinked = fileLinked;
         }
 
         public CardDto CreateCardDto()
         {
-            return new CardDto(Id, Title, FileReference, CreatedAt);
+            return new CardDto(Id, Title, FileReference, CreatedAt, FileLinked);
         }
     }
 }

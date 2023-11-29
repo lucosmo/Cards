@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyCards.API.Data;
 
@@ -11,9 +12,10 @@ using MyCards.API.Data;
 namespace MyCards.API.Migrations
 {
     [DbContext(typeof(MyCardsDbContext))]
-    partial class MyCardsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231129113234_FileLinkedProperty")]
+    partial class FileLinkedProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

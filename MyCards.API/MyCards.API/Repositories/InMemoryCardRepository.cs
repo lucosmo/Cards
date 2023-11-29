@@ -29,7 +29,7 @@ namespace MyCards.API.Repositories
             if (existingCard != null) 
             {
                 existingCard.Title = newValuesCard.Title;
-                var resultCardEntity = new CardEntity(existingCard.Id, existingCard.Title, existingCard.FileReference, existingCard.CreatedAt);
+                var resultCardEntity = new CardEntity(existingCard.Id, existingCard.Title, existingCard.FileReference, existingCard.CreatedAt, existingCard.FileLinked);
                 return Task.FromResult<CardEntity?>(resultCardEntity);
             }
             else

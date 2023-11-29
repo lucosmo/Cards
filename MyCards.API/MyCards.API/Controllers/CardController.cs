@@ -46,8 +46,9 @@ namespace MyCards.API.Controllers
             var newCardEntity = new CardEntity
             {
                 Title = newCard.Title,
-                FileReference = newCard.FileReference,
-                CreatedAt = DateTime.Now
+                FileReference = string.Empty,
+                CreatedAt = DateTime.Now,
+                FileLinked = false
             };
             var createdCard = await _cardRepository.Create(newCardEntity);
             var createdCardDto = createdCard.CreateCardDto();

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Mvc;
+using MyCards.API.Repositories;
 
 namespace MyCards.API.Controllers
 {
@@ -7,13 +9,23 @@ namespace MyCards.API.Controllers
     public class FileController : ControllerBase
     {
         private readonly string _basePath = @"C:\project\mycards-api";
+        private readonly IFileRepository _fileRepository;
+
+        public FileController(IFileRepository fileRepository)
+        {
+            _fileRepository = fileRepository;
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
-            
-            using (var fileStream = System.IO.File.Create($"{_basePath}\\{file.FileName}"))
+            var filename = file.FileName;
+
+            using (var content = new MemoryStream())
             {
-                await file.CopyToAsync(fileStream);
+                await file.CopyToAsync(content);
+                content.Position = 0;
+                await _fileRepository.Upload(filename, content);
             }
             return new OkResult();
         }
@@ -22,8 +34,9 @@ namespace MyCards.API.Controllers
         [Route("{fileName}")] //route parameter
         public async Task<IActionResult> DownloadFile(string fileName)
         {
-            var result = await System.IO.File.ReadAllBytesAsync($"{_basePath}\\{fileName}");
-            return new FileContentResult(result, "application/octet-stream");
+            var result = await _fileRepository.Download(fileName);
+            
+            return File(result, "application/octet-stream", fileName);
         }
         //route parameters
         //query parameters

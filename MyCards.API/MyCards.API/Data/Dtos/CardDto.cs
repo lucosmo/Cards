@@ -4,6 +4,7 @@
         int Id,
         string Title,
         string FileReference,
-        DateTime CreatedAt);
+        DateTime CreatedAt,
+        bool FileLinked);
     
 }

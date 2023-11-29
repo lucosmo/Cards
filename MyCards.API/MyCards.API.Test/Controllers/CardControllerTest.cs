@@ -39,8 +39,8 @@ namespace MyCards.API.Test.Controllers
         public async Task Post_NewCard_Pass()
         {
             //Arrange
-            CreateCardDto c = new CreateCardDto("Card1", "cardfile1");
-            CardEntity resultCard = new CardEntity(1, c.Title, c.FileReference, DateTime.Now);
+            CreateCardDto c = new CreateCardDto("Card1");
+            CardEntity resultCard = new CardEntity(1, c.Title, string.Empty, DateTime.Now, false);
             _cardRepositoryMock.Setup(x => x.Create(It.IsAny<CardEntity>()))
                 .ReturnsAsync(resultCard);           
             //Act
@@ -52,7 +52,8 @@ namespace MyCards.API.Test.Controllers
             Assert.IsNotNull(okResult);
             Assert.That(okResult.StatusCode, Is.EqualTo(200));
             Assert.That(cvalues, Has.Property("Title").EqualTo(c.Title)
-                          & Has.Property("FileReference").EqualTo(c.FileReference)
+                          & Has.Property("FileReference").EqualTo(string.Empty)
+                          & Has.Property("FileLinked").EqualTo(false)
                           );
                
         }
@@ -60,7 +61,7 @@ namespace MyCards.API.Test.Controllers
         public async Task Put_CardIsInTheList_Pass()
         {
             //Arrange
-            CardEntity c = new CardEntity(3, "Card3", "cardfile3", DateTime.Now);
+            CardEntity c = new CardEntity(3, "Card3", "cardfile3", DateTime.Now, true);
             //CardEntity newValuesCard = new CardEntity(3, "NewCard3", "cardfile3", DateTime.Now);
             //CardDto updatedValuesCardDto = new CardDto(newValuesCard.Id, newValuesCard.Title, newValuesCard.FileReference, newValuesCard.CreatedAt);
             UpdateCardDto newVauesCardDto = new UpdateCardDto(3, "NewCard3");
@@ -117,7 +118,7 @@ namespace MyCards.API.Test.Controllers
         public async Task Delete_CardIsInTheList_Pass()
         {
             //Arrange
-            CardEntity c = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c = new CardEntity(1, "Card1", "cardfile1", DateTime.Now, true);
             _cardRepositoryMock.Setup(x => x.Remove(It.IsAny<int>()))
                 .ReturnsAsync(c);
             //Act

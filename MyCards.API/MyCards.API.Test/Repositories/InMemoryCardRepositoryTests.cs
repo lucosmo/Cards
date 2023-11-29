@@ -26,7 +26,7 @@ namespace MyCards.API.Test.Repositories
         public async Task Add_Card_Pass()
         {
             //Arrange
-            CardEntity c = new CardEntity(1,"Card1", "cardfile1", DateTime.Now);
+            CardEntity c = new CardEntity(1,"Card1", "cardfile1", DateTime.Now, false);
             //Act
             var newCard =await _repository.Create(c);
             //Assert
@@ -41,7 +41,7 @@ namespace MyCards.API.Test.Repositories
         public async Task Check_CardListNotEmpty_Pass()
         {
             //Arrange
-            CardEntity c = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c = new CardEntity(1, "Card1", "cardfile1", DateTime.Now, false);
             //Act
             var newCard = await _repository.Create(c);
             List<CardEntity> newList = await _repository.Get();
@@ -53,8 +53,8 @@ namespace MyCards.API.Test.Repositories
         public async Task AddTwoCards_CardListHasTwoCards_Pass()
         {
             //Arrange
-            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
-            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now, false);
+            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now, false);
             //Act
             var newCard = await _repository.Create(c1);
             var newCard2 = await _repository.Create(c2);
@@ -66,7 +66,7 @@ namespace MyCards.API.Test.Repositories
         public async Task UpdateTitle_CardListEmpty_Pass()
         {
             //Arrange
-            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now, false);
             //Act
             CardEntity? updatedCard = await _repository.Update(c1);
             //Assert
@@ -77,10 +77,10 @@ namespace MyCards.API.Test.Repositories
         public async Task UpdateTitle_CardInTheList_Pass()
         {
             //Arrange
-            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
-            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now);
-            CardEntity c3 = new CardEntity(3, "Card3", "cardfile3", DateTime.Now);
-            CardEntity newValuesCard = new CardEntity(3, "NewCard3", "cardfile3", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now, false);
+            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now, false);
+            CardEntity c3 = new CardEntity(3, "Card3", "cardfile3", DateTime.Now, false);
+            CardEntity newValuesCard = new CardEntity(3, "NewCard3", "cardfile3", DateTime.Now, false);
 
             var newCard = await _repository.Create(c1);
             var newCard2 = await _repository.Create(c2);
@@ -96,10 +96,10 @@ namespace MyCards.API.Test.Repositories
         public async Task UpdateTitle_CardNotInTheList_Pass()
         {
             //Arrange
-            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now);
-            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now);
-            CardEntity c3 = new CardEntity(3, "Card3", "cardfile3", DateTime.Now);
-            CardEntity newValuesCard = new CardEntity(5, "NewCard5", "cardfile5", DateTime.Now);
+            CardEntity c1 = new CardEntity(1, "Card1", "cardfile1", DateTime.Now, false);
+            CardEntity c2 = new CardEntity(2, "Card2", "cardfile2", DateTime.Now, false);
+            CardEntity c3 = new CardEntity(3, "Card3", "cardfile3", DateTime.Now, false);
+            CardEntity newValuesCard = new CardEntity(5, "NewCard5", "cardfile5", DateTime.Now, false);
 
             var newCard = await _repository.Create(c1);
             var newCard2 = await _repository.Create(c2);

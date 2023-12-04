@@ -25,5 +25,14 @@ namespace MyCards.API.Repositories
             var blobClient = containerClient.GetBlobClient(filename);
             await blobClient.UploadAsync(content);
         }
+
+        public async Task Delete(string filename)
+        {
+            var client = new BlobServiceClient(_connectionString);
+            var containerClient = client.GetBlobContainerClient("cards");
+            var blobClient = containerClient.GetBlobClient(filename);
+            await blobClient.DeleteAsync();
+        }
+        //delete
     }
 }

@@ -42,5 +42,8 @@ namespace MyCards.API.Controllers
         //query parameters
         //to do query parameters
         //upload multiple files
+
+
+        //implement delete
     }
 }

@@ -4,6 +4,7 @@
     {
         Task Upload(string filename, Stream content);
         Task<Stream> Download(string filename);
+        Task Delete(string filename);
         
     }
 }

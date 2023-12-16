@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.API", "MyCards.API\MyCards.API.csproj", "{0348E1B3-F09B-4637-8585-39CC6B4E6E5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.API.Test", "MyCards.API.Test\MyCards.API.Test.csproj", "{1D35E72A-4BD9-4FAC-868F-4B855B5D4D72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Frontend.Server", "MyCards.Frontend\Server\MyCards.Frontend.Server.csproj", "{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Frontend.Client", "MyCards.Frontend\Client\MyCards.Frontend.Client.csproj", "{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Frontend.Shared", "MyCards.Frontend\Shared\MyCards.Frontend.Shared.csproj", "{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0348E1B3-F09B-4637-8585-39CC6B4E6E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0348E1B3-F09B-4637-8585-39CC6B4E6E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0348E1B3-F09B-4637-8585-39CC6B4E6E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0348E1B3-F09B-4637-8585-39CC6B4E6E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D35E72A-4BD9-4FAC-868F-4B855B5D4D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D35E72A-4BD9-4FAC-868F-4B855B5D4D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D35E72A-4BD9-4FAC-868F-4B855B5D4D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D35E72A-4BD9-4FAC-868F-4B855B5D4D72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62EB484A-4972-4DB8-B36A-CABAFBB0DAA6}
+	EndGlobalSection
+EndGlobal

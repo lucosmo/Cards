@@ -11,13 +11,15 @@ namespace MyCards.API.Test.Controllers
     {
         
         Mock<ICardRepository> _cardRepositoryMock;
+        Mock<IFileRepository> _fileRepositoryMock;
         CardController _controller;
         [SetUp] 
         public void SetUp() 
         {
             _cardRepositoryMock = new Mock<ICardRepository>();
+            _fileRepositoryMock = new Mock<IFileRepository>();
             
-            _controller = new CardController(_cardRepositoryMock.Object);
+            _controller = new CardController(_cardRepositoryMock.Object, _fileRepositoryMock.Object);
         }
 
         [Test]

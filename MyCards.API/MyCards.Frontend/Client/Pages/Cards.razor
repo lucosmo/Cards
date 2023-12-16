@@ -1,0 +1,12 @@
+﻿@page "/cards"
+@inject HttpClient client
+
+<h3>Cards</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await client.GetAsync("Card");
+
+    }
+}

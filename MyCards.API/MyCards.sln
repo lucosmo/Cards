@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.API", "MyCards.API\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.API.Test", "MyCards.API.Test\MyCards.API.Test.csproj", "{1D35E72A-4BD9-4FAC-868F-4B855B5D4D72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Frontend.Server", "MyCards.Frontend\Server\MyCards.Frontend.Server.csproj", "{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.Frontend.Server", "MyCards.Frontend\Server\MyCards.Frontend.Server.csproj", "{A2DFDE7C-6C8B-476B-BBDE-1F2592DF5923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Frontend.Client", "MyCards.Frontend\Client\MyCards.Frontend.Client.csproj", "{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.Frontend.Client", "MyCards.Frontend\Client\MyCards.Frontend.Client.csproj", "{0150D374-DD7F-4CD5-AA1B-FB1E9894EAC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Frontend.Shared", "MyCards.Frontend\Shared\MyCards.Frontend.Shared.csproj", "{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.Frontend.Shared", "MyCards.Frontend\Shared\MyCards.Frontend.Shared.csproj", "{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

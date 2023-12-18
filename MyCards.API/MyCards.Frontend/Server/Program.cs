@@ -12,6 +12,8 @@ namespace MyCards.Frontend
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+            //from https://stackoverflow.com/questions/70583469/host-web-api-in-blazor-server-application
+            builder.Services.AddControllers();
 
             var app = builder.Build();
 
@@ -38,6 +40,7 @@ namespace MyCards.Frontend
             app.MapRazorPages();
             app.MapControllers();
             app.MapFallbackToFile("index.html");
+            //app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

@@ -15,4 +15,12 @@
     <ProjectReference Include="..\Shared\MyCards.Frontend.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\CardDetails.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\CardDetails.razor" />
+  </ItemGroup>
+
 </Project>

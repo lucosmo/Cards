@@ -4,7 +4,7 @@ using MyCards.Frontend.Shared;
 namespace MyCards.Frontend.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("bff/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

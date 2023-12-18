@@ -1,0 +1,51 @@
+﻿@page "/card/{CardId}"
+
+@inject HttpClient client
+
+<h3>CardDetails</h3>
+
+@if (Error == null)
+{
+    <p><em>You have provided incorrect CardId</em></p>
+}
+else if(CardData != null)
+{
+    
+    <table>
+        <tr>
+            <td>@CardData.Id</td>
+            <td>@CardData.Title</td>
+            <td>@CardData.FileReference</td>
+            <td>@CardData.CreatedAt</td>
+            <td>@CardData.FileLinked</td>
+        </tr>
+    </table>
+}
+else
+{
+    <p><em>There is no card with provided CardID</em></p>
+}
+
+@code {
+    [Parameter]
+    public string CardId { get; set; } = null!;
+    public string? Error { get; set; }
+    public CardData? CardData { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        if(string.IsNullOrEmpty(CardId))
+        {
+            Error = "CardId shouldn't be empty/null";
+        }
+        else if(int.TryParse(CardId, out var parsedCardId))
+        {
+            var response = await client.GetFromJsonAsync<CardData>($"Card/{parsedCardId}");
+            CardData = response;
+            StateHasChanged();
+        }
+        else
+        {
+            Error = $"CardId should be an intiger.";
+        }
+    }
+}

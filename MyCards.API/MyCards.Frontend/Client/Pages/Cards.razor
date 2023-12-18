@@ -1,12 +1,45 @@
 ﻿@page "/cards"
+
 @inject HttpClient client
 
 <h3>Cards</h3>
 
+@if (receivedCards == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>FileReference</th>
+                <th>CreatedAt</th>
+                <th>FileLinked</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var card in receivedCards)
+            {
+                <tr>
+                    <td>@card.Id</td>
+                    <td>@card.Title</td>
+                    <td>@card.FileReference</td>
+                    <td>@card.CreatedAt</td>
+                    <td>@card.FileLinked</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 @code {
+    private List<CardData>? receivedCards;
     protected override async Task OnInitializedAsync()
     {
-        var response = await client.GetAsync("Card");
+        var response = await client.GetFromJsonAsync<List<CardData>>("Card");
 
+        receivedCards = response;
     }
 }

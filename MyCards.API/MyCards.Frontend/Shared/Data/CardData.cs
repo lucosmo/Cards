@@ -13,5 +13,6 @@ namespace MyCards.Frontend.Shared.Data
         public string FileReference { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public bool FileLinked { get; set; }
+        public string? FileUrl { get; set; }
     }
 }

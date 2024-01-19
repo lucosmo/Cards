@@ -29,10 +29,31 @@ else
                     <td>@card.FileReference</td>
                     <td>@card.CreatedAt</td>
                     <td>@card.FileLinked</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(card.FileUrl))
+                        {
+                            <img src="@card.FileUrl" alt="Obrazek" class="img-thumbnail" style="max-width: 50px; max-height: 50px;" />
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+    <div class="row">
+        @foreach (var card in receivedCards)
+        {
+            <div class="col-4 mb-3">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(card.FileUrl))
+                    {
+                        <a href="@($"/card/{card.Id}")">
+                            <img src="@card.FileUrl" alt="Obrazek" class="card-img-top" style="max-height: 150px; object-fit: cover;" />
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
 }
 @code {
     private List<CardData>? receivedCards;

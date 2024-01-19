@@ -15,6 +15,18 @@ namespace MyCards.Frontend
             //from https://stackoverflow.com/questions/70583469/host-web-api-in-blazor-server-application
             builder.Services.AddControllers();
 
+            var cardControllerUrl = builder.Configuration["ApiClientBaseUrl"] + "Card/";
+            var fileControllerUrl = builder.Configuration["ApiClientBaseUrl"] + "File/";
+
+            builder.Services.AddHttpClient("CardClient", x =>
+            {
+                x.BaseAddress = new Uri(builder.Configuration["ApiClientBaseUrl"]+"Card/");
+            });
+            builder.Services.AddHttpClient("FileClient", x =>
+            {
+                x.BaseAddress = new Uri(builder.Configuration["ApiClientBaseUrl"]+"File/");
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -11,17 +11,23 @@ namespace MyCards.Frontend.Server.Controllers
     [ApiController]
     public class CardController : ControllerBase
     {
-        private HttpClient _apiClient;
-        public CardController()
+        private HttpClient _apiClient, _fileClient;
+        private readonly IHttpClientFactory _httpClientFactory;
+        public CardController(IHttpClientFactory httpClientFactory)
         {
-            _apiClient = new HttpClient() { BaseAddress = new Uri("https://localhost:7025/api/Card/") };
-         
+            //_apiClient = new HttpClient() { BaseAddress = new Uri("") };
+            //_fileClient = new HttpClient() { BaseAddress = new Uri(") };
+            _httpClientFactory = httpClientFactory;
+           //_apiClient = _httpClientFactory.CreateClient("CardClient");
+           //_fileClient = _httpClientFactory.CreateClient("FileClient");
+
+
         }
         [HttpGet]
         //[Route("Card")]
         public async Task<IActionResult> GetAll()
         {
-            var response = await _apiClient.GetAsync("");
+            var response = await _httpClientFactory.CreateClient("CardClient").GetAsync("");
             if (response.IsSuccessStatusCode)
             {
                 var dtosResponse = await response.Content.ReadFromJsonAsync<List<CardDto>>();
@@ -29,15 +35,14 @@ namespace MyCards.Frontend.Server.Controllers
                 {
                     return StatusCode(500);
                 }
-                var mappedData = dtosResponse.Select(item => new CardData()
-                {
-                    Id = item.Id,
-                    Title = item.Title,
-                    FileReference = item.FileReference,
-                    CreatedAt = item.CreatedAt,
-                    FileLinked = item.FileLinked
-
-                }).ToList();
+                var mappedData = dtosResponse.Select(item => CardMapper.MapCard(
+                
+                    item.Id,
+                    item.Title,
+                    item.FileReference,
+                    item.CreatedAt,
+                    item.FileLinked,
+                    _httpClientFactory.CreateClient("FileClient").BaseAddress.ToString())).ToList();
                 return Ok(mappedData);
 
             }
@@ -49,7 +54,7 @@ namespace MyCards.Frontend.Server.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetCard(int id)
         {
-            var response = await _apiClient.GetAsync($"{id}");
+            var response = await _httpClientFactory.CreateClient("CardClient").GetAsync($"{id}");
             if(response.IsSuccessStatusCode) 
             {
                 var dtosResponse = await response.Content.ReadFromJsonAsync<CardDto>();
@@ -57,7 +62,7 @@ namespace MyCards.Frontend.Server.Controllers
                 {
                     return StatusCode(500);
                 }
-                var mappedData = CardMapper.MapCard(dtosResponse.Id, dtosResponse.Title, dtosResponse.FileReference, dtosResponse.CreatedAt, dtosResponse.FileLinked);
+                var mappedData = CardMapper.MapCard(dtosResponse.Id, dtosResponse.Title, dtosResponse.FileReference, dtosResponse.CreatedAt, dtosResponse.FileLinked, _httpClientFactory.CreateClient("FileClient").BaseAddress.ToString());
                                 
                 return Ok(mappedData);
             }

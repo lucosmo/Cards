@@ -8,11 +8,24 @@
 {
     <p><em>You have provided incorrect CardId</em></p>
 }
-else if(CardData != null)
+else if (CardData != null)
 {
-    
-    <table>
+    <div class="container text-center col-md-4">
+        <div class="card">
+            @if (!string.IsNullOrEmpty(CardData.FileUrl))
+            {
+                <img src="@CardData.FileUrl" alt="Obrazek" class="card-img-top img-thumbnail rounded" style="max-height: 100%; object-fit: cover;" />
+            }
+            <div class="card-body text-center">
+                <h5 class="card-text">Title: @CardData.Title</h5>
+                <p class="card-text">CreatedAt: @CardData.CreatedAt</p>
+            </div>
+        </div>
+        <a href="/cards" class="btn btn-primary mb-3">Back to list of cards</a>
+    </div>
+    <table class="table">
         <tr>
+            <td>Title: </td>
             <td>@CardData.Id</td>
             <td>@CardData.Title</td>
             <td>@CardData.FileReference</td>
@@ -33,11 +46,11 @@ else
     public CardData? CardData { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        if(string.IsNullOrEmpty(CardId))
+        if (string.IsNullOrEmpty(CardId))
         {
             Error = "CardId shouldn't be empty/null";
         }
-        else if(int.TryParse(CardId, out var parsedCardId))
+        else if (int.TryParse(CardId, out var parsedCardId))
         {
             var response = await client.GetFromJsonAsync<CardData>($"Card/{parsedCardId}");
             CardData = response;

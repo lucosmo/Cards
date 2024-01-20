@@ -16,7 +16,7 @@ namespace MyCards.Frontend.Server.Controllers
         public CardController(IHttpClientFactory httpClientFactory)
         {
             //_apiClient = new HttpClient() { BaseAddress = new Uri("") };
-            //_fileClient = new HttpClient() { BaseAddress = new Uri(") };
+            //_fileClient = new HttpClient() { BaseAddress = new Uri("") };
             _httpClientFactory = httpClientFactory;
            //_apiClient = _httpClientFactory.CreateClient("CardClient");
            //_fileClient = _httpClientFactory.CreateClient("FileClient");
@@ -35,14 +35,7 @@ namespace MyCards.Frontend.Server.Controllers
                 {
                     return StatusCode(500);
                 }
-                var mappedData = dtosResponse.Select(item => CardMapper.MapCard(
-                
-                    item.Id,
-                    item.Title,
-                    item.FileReference,
-                    item.CreatedAt,
-                    item.FileLinked,
-                    _httpClientFactory.CreateClient("FileClient").BaseAddress.ToString())).ToList();
+                var mappedData = dtosResponse.Select(item => CardMapper.MapCard(item, _httpClientFactory.CreateClient("FileClient").BaseAddress.ToString())).ToList();
                 return Ok(mappedData);
 
             }
@@ -62,7 +55,7 @@ namespace MyCards.Frontend.Server.Controllers
                 {
                     return StatusCode(500);
                 }
-                var mappedData = CardMapper.MapCard(dtosResponse.Id, dtosResponse.Title, dtosResponse.FileReference, dtosResponse.CreatedAt, dtosResponse.FileLinked, _httpClientFactory.CreateClient("FileClient").BaseAddress.ToString());
+                var mappedData = CardMapper.MapCard(dtosResponse, _httpClientFactory.CreateClient("FileClient").BaseAddress.ToString());
                                 
                 return Ok(mappedData);
             }

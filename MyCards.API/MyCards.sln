@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.Frontend.Client", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards.Frontend.Shared", "MyCards.Frontend\Shared\MyCards.Frontend.Shared.csproj", "{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCards.Functions", "MyCards.Functions\MyCards.Functions.csproj", "{97F047A3-DB55-4AF3-89E9-AB1990A3D95E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF1FE88C-DB5D-42E8-8A04-3A5D34EBA024}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97F047A3-DB55-4AF3-89E9-AB1990A3D95E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97F047A3-DB55-4AF3-89E9-AB1990A3D95E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97F047A3-DB55-4AF3-89E9-AB1990A3D95E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F047A3-DB55-4AF3-89E9-AB1990A3D95E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
